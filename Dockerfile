@@ -10,15 +10,18 @@ ENV PYTHONUNBUFFERED 1
 
 # install system dependencies
 RUN apt-get update \
-  && apt-get -y install netcat gcc \
+  && apt-get -y install netcat gcc postgresql \
   && apt-get clean
 
 # install python dependencies
-
 COPY pyproject.toml poetry.lock ./
 RUN pip install --upgrade pip
-RUN pip install poetry
-RUN poetry export -f requirements.txt > requirements.txt \
+RUN pip install poetry \
+  && poetry export -f requirements.txt > requirements.txt --dev --without-hashes \
   && pip install -r requirements.txt
+
 # add app
 COPY . .
+
+# run entrypoint.sh
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
