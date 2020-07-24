@@ -30,8 +30,7 @@ async def generate_schema() -> None:
     log.info("initializing tortoise")
 
     await Tortoise.init(
-        db_url=os.environ.get("DATABASE_URL"),
-        modules={"models": ["models.tortoise"]},
+        db_url=os.environ.get("DATABASE_URL"), modules={"models": ["models.tortoise"]},
     )
     log.info("generating database schema via tortoise")
     await Tortoise.generate_schemas()

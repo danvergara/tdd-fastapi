@@ -11,10 +11,7 @@ async def post(payload: SummaryPayloadSchema) -> int:
     """
     post creates a new summary in db, given a valid payload
     """
-    summary = TextSummary(
-        url=payload.url,
-        summary="dummy summary",
-    )
+    summary = TextSummary(url=payload.url, summary="dummy summary",)
     await summary.save()
     return summary.id
 
