@@ -48,3 +48,13 @@ test-summary:
 ## test-read: runs all the test that have read in their name
 test-read:
 	docker-compose exec web python -m pytest -k read -v
+
+.PHONY: test-cov
+## test-cov: run the tests with coverage
+test-cov:
+	docker-compose exec web python -m pytest --cov="."
+
+.PHONY: test-html-cov
+## test-html-cov: generate a html report on testing coverage
+test-html-cov:
+	docker-compose exec web python -m pytest --cov="." --cov-report html

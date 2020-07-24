@@ -8,6 +8,8 @@ services:
       # - ./:/usr/src/app
     ports:
       - 8002:8000
+    volumes:
+      - ./:/usr/src/app:z
     environment:
       - ENVIRONMENT=dev
       - TESTING=0
