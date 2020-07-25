@@ -67,7 +67,7 @@ flake:
 .PHONY: black-check
 ## black-check: runs the black checker
 black-check:
-	docker-compose exec web flake8 .
+	docker-compose exec web black . --check
 
 .PHONY: black-diff
 ## black-diff: shows the possible result of the black formatter
@@ -78,3 +78,18 @@ black-diff:
 ## black: runs the black formatter
 black:
 	docker-compose exec web black .
+
+.PHONY: isort-check
+## isort-check: check the order of the imports
+isort-check:
+	docker-compose exec web /bin/sh -c "isort ./**/*.py --check-only"
+
+.PHONY: isort-diff
+## isort-diff: shows the differences after apply the changes
+isort-diff:
+	docker-compose exec web /bin/sh -c "isort ./**/*.py --diff"
+
+.PHONY: isort
+## isort:  quickly sort all our imports alphabetically and automatically separate them into sections
+isort:
+	docker-compose exec web /bin/sh -c "isort ./**/*.py"
