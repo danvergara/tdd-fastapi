@@ -1,12 +1,12 @@
 """app/models/pydantic.py"""
 
-from pydantic import BaseModel
+from pydantic import BaseModel, AnyHttpUrl
 
 
 class SummaryPayloadSchema(BaseModel):
     """summary payload schema"""
 
-    url: str
+    url: AnyHttpUrl
 
 
 class SummaryResponseSchema(SummaryPayloadSchema):
