@@ -31,3 +31,9 @@ async def get_all() -> List:
     """
     summaries = await TextSummary.all().values()
     return summaries
+
+
+async def delete(id: int) -> int:
+    """Deletes a summary in db"""
+    summary = await TextSummary.filter(id=id).first().delete()
+    return summary
