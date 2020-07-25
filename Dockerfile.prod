@@ -5,12 +5,12 @@ FROM python:3.8.3-slim-buster
 RUN mkdir -p /home/app
 
 # create the app user
-RUN addgroup --system app && adduser --system --group user
+RUN addgroup --system app && adduser --system --group app
 
 # create the appropriate directories
 ENV HOME=/home/app
 ENV APP_HOME=/home/app/web
-RUN mkidr $APP_HOME
+RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
 # set environment variables
@@ -28,11 +28,11 @@ RUN apt-get update \
 COPY pyproject.toml poetry.lock ./
 RUN pip install --upgrade pip
 RUN pip install poetry \
-  && poetry export -f requirements.txt > requirements.txt --without-hashes \
+  && poetry export -f requirements.txt > requirements.txt --dev --without-hashes \
   && pip install -r requirements.txt
 
 # add app
-COPY ..
+COPY . .
 
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME
