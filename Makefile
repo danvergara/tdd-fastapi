@@ -52,7 +52,7 @@ test-read:
 .PHONY: test-cov
 ## test-cov: runs the tests with coverage
 test-cov:
-	docker-compose exec web python -m pytest --cov="."
+	docker-compose exec web python -m pytest --cov="." -vv
 
 .PHONY: test-html-cov
 ## test-html-cov: generates a html report on testing coverage
