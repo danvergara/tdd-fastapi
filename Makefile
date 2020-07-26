@@ -59,6 +59,11 @@ test-cov:
 test-html-cov:
 	docker-compose exec web python -m pytest --cov="." --cov-report html
 
+.PHONY: unit-test
+## unit-test: run the unit test in parallel
+unit-test:
+	docker-compose exec web pytest -k "unit" -n auto
+
 .PHONY: flake
 ## flake: runs flake8
 flake:

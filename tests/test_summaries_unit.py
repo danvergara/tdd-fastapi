@@ -7,7 +7,7 @@ from datetime import datetime
 
 import pytest
 
-from app.api import crud, summaries
+from app.api import crud
 
 
 def test_create_summary(test_app, monkeypatch):
@@ -20,9 +20,7 @@ def test_create_summary(test_app, monkeypatch):
 
     monkeypatch.setattr(crud, "post", mock_post)
 
-    response = test_app.post(
-        "/summaries/", data=json.dumps(test_request_payload)
-    )
+    response = test_app.post("/summaries/", data=json.dumps(test_request_payload))
 
     assert response.status_code == 201
     assert response.json() == test_response_payload
@@ -42,9 +40,7 @@ def test_create_summaries_invalid_json(test_app):
         ]
     }
 
-    response = test_app.post(
-        "/summaries/", data=json.dumps({"url": "invalid://url"}),
-    )
+    response = test_app.post("/summaries/", data=json.dumps({"url": "invalid://url"}),)
     assert response.status_code == 422
     assert response.json()["detail"][0]["msg"] == "URL scheme not permitted"
 
@@ -70,6 +66,7 @@ def test_read_summary(test_app, monkeypatch):
 
 def test_read_summary_incorrect_id(test_app, monkeypatch):
     """test handle the error when an incorrect id is passed"""
+
     async def mock_get(id):
         return None
 
@@ -109,6 +106,7 @@ def test_read_all_summaries(test_app, monkeypatch):
 
 def test_remove_summary(test_app, monkeypatch):
     """test remove a summary, mocking the db queries"""
+
     async def mock_get(id):
         return {
             "id": 1,
@@ -133,6 +131,7 @@ def test_remove_summary_incorrect_id(test_app, monkeypatch):
     mocking the db query
     pass
     """
+
     async def mock_get(id):
         return None
 
@@ -216,17 +215,16 @@ def test_update_summary(test_app, monkeypatch):
     ],
 )
 def test_update_summary_invalid(
-        test_app, monkeypatch, summary_id, payload, status_code, detail
+    test_app, monkeypatch, summary_id, payload, status_code, detail
 ):
     """thes the error handling when an invalid input is passed"""
+
     async def mock_put(id, payload):
         return None
 
     monkeypatch.setattr(crud, "put", mock_put)
 
-    response = test_app.put(
-        f"/summaries/{summary_id}/", data=json.dumps(payload)
-    )
+    response = test_app.put(f"/summaries/{summary_id}/", data=json.dumps(payload))
     assert response.status_code == status_code
     assert response.json()["detail"] == detail
 
