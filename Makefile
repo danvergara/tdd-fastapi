@@ -27,12 +27,12 @@ web-db:
 .PHONY: test
 ## test: runs all the tests in the app
 test:
-	docker-compose exec web python -m pytest -v
+	docker-compose exec web python -m pytest -vv
 
 .PHONY: silent-test
 ## silent-test: runs all tests in the app disabling warnings
 silent-test:
-	docker-compose exec web python -m pytest -p no:warnings -v
+	docker-compose exec web python -m pytest -p no:warnings -vv
 
 .PHONY: test-ping
 ## test-ping: runs all tests that have ping in their name
